@@ -1,0 +1,20 @@
+.board{
+  /*display: inline-block;*/
+}
+
+.row{
+}
+
+.square{
+	position:relative;
+	display: inline-block;
+	width:45px;
+   max-width:45px;
+   height:45px;
+   max-height:45px;
+	border-style: solid;
+	border-width: 2px;
+	border-color:black;
+	overflow:hidden;
+	margin:1px;
+}
