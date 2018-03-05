@@ -2,7 +2,7 @@ import React from 'react'
 import Square from './square'
 import '../board.css'
 import {win} from '../services/gameLogic'
-// import {move} from '../services/aiLogic'
+import {move} from '../services/aiLogic'
 
 
 class Board extends React.Component{
@@ -34,9 +34,12 @@ class Board extends React.Component{
 	componentDidUpdate = () => {
 		//check if theres a winner
 		let winner = win(this.state.board)
-		if (!winner && this.state.movesMade < 9){
+		if (!winner && this.state.movesMade < 9 && this.state.movesMade % 2 !== 0){
 				move(this.state.board, this.state.movesMade, this.updateBoard)
-		}else{
+		}else if (winner){
+			this.gameOver(winner)
+		}
+		else if (this.state.movesMade === 9){
 			this.gameOver(winner)
 		}
 	}
@@ -52,11 +55,13 @@ class Board extends React.Component{
 			)
 		}else{
 			alert("game over; no winner")
+			this.setState(
+				{ board: [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']], 
+				  movesMade: 0 })
 			//display popup instead of alerting
 		}
 	}
 
-	alertEnding = () =>
 
 	render(){
 		return(

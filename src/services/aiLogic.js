@@ -1,25 +1,38 @@
 export const move = (board, movesMade, updateBoard) => {
-	if (canIwin()){
+	// if I have 2 in a row, win
+	if (canIWin(board, updateBoard)){
 		//updateBoard()
+		return true
 	}
-	else if (canTheyWin()){
-		//updateBoard
+	// if they have 2 in a row, block them
+	else if (canIBlock(board, updateBoard)){
+		//updateBoard()
+		return true
 	}
 	else{
 		//my first move?
 		if (movesMade === 1){
-			aiFirstMove(board)
-		}
+			aiFirstMove(board, updateBoard)
+		}else{
 		//find empty space, go there
-		// board.forEach(row => {
-		// if (row.every(square => square === "O")){
-		// 	win = true
-		// } else if (row.every(square => square === "X")){
-		// 	win = true
-		// }
+			board.forEach(row => {
+				for (let i=0; i<3; i++){
+					if(board[row][i] === ' '){
+						updateBoard(row, i)
+					}
+					break
+				}
+				// return true
+				// break
+			})
+		}
+		return true
 	}
 }
 
+// export const makeMove(row, column, updateBoard){
+// 	updateBoard(row, column)
+// }
 
 
 export const aiFirstMove = (board, updateBoard) =>{
@@ -31,62 +44,230 @@ export const aiFirstMove = (board, updateBoard) =>{
 	}
 }
 
-export const aiSubsequentMoves = (board) => {
-	// if I have 2 in a row, place the third one
-	checkForTwo(board)
-
-	// if they have 2 in a row/column/diagonal and the last is blank, block them
-	// otherwise, go anywhere open
-}
-
-
 
 //check if I'm about to win
-export const canIwin = (board) => {
-
-}
-
-
-//if that 
-export const twoInRow = (board) => {
-	let twoIn = false
-	board.forEach(row => {
-		
-	})
-
-	return false;
-}
-
-export const twoInColumn = (board) => {
-	// first if statement is making sure that all of the squares don't equal each other by all being empty spaces
-	// first column
-		if(board[0][0] === board[1][0] 
-			&& board[0][0] === board[2][0]){
-			return true
-		}
-	// second column
-		if(board[0][1] === board[1][1] 
-			&& board[0][1] === board[2][1]){
-			return true
-		}
-	// third column
-		if(board[0][2] === board[1][2] 
-			&& board[0][2] === board[2][2]){
-			return true
-		}
-	return false
-}
-
-export const twoInDiagonal = (board) => {
-	// check middle square first, then check relevant corners
-	if (board[1][1] === ' ') return false;
-	if(board[0][0] === board[1][1] 
-		&& board[1][1] === board[2][2]){
-		return true
-	}else if(board[0][2] === board[1][1] 
-		&& board[1][1] === board[2][0]){
+export const canIWin = (board, updateBoard) => {
+	if (winColumn(board, updateBoard) || winRow(board, updateBoard) || winDiagonal(board, updateBoard)){
 		return true
 	}
 	return false
+}
 
+export const canIBlock = (board, updateBoard) => {
+	if (blockColumn(board, updateBoard) || blockRow(board, updateBoard) || blockDiagonal(board, updateBoard)){
+		return true
+	}
+	return false
+}
+
+//if that 
+export const winRow = (board, updateBoard) => {
+	//top row
+	if(board[0][0] === 'X' && board[0][0] === board[0][1]){
+		updateBoard(0,2)
+		return true
+	}else if (board[0][0] === 'X' && board[0][0] === board[0][2]){
+		updateBoard(0,1)
+		return true
+	}else if (board[0][1] === 'X' && board[0][1] === board[0][2] ){
+		updateBoard(0,0)
+		return true
+	}
+	// middle row
+	else if(board[1][0] === 'X' && board[1][0] === board[1][1]){
+		updateBoard(1,2)
+		return true
+	}else if (board[1][0] === 'X' && board[1][0] === board[1][2]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'X' && board[1][1] === board[1][2]){
+		updateBoard(1,0)
+		return true
+	}
+	// bottom row
+	else if(board[2][0] === 'X' && board[2][0] === board[2][1]){
+		updateBoard(2,2)
+		return true
+	}else if(board[2][0] === 'X' && board[2][0] === board[2][2]){
+		updateBoard(2,1)
+		return true
+	}else if(board[2][1] === 'X' && board[2][2] === board[2][1]){
+		updateBoard(2,0)
+		return true
+	}
+	else{ 
+		return false
+	}
+}
+
+export const blockRow = (board, updateBoard) => {
+	//top row
+	if(board[0][0] === 'O' && board[0][0] === board[0][1]){
+		updateBoard(0,2)
+		return true
+	}else if (board[0][0] === 'O' && board[0][0] === board[0][2]){
+		updateBoard(0,1)
+		return true
+	}else if (board[0][1] === 'O' && board[0][1] === board[0][2] ){
+		updateBoard(0,0)
+		return true
+	}
+	// middle row
+	else if(board[1][0] === 'O' && board[1][0] === board[1][1]){
+		updateBoard(1,2)
+		return true
+	}else if (board[1][0] === 'O' && board[1][0] === board[1][2]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'O' && board[1][1] === board[1][2]){
+		updateBoard(1,0)
+		return true
+	}
+	// bottom row
+	else if(board[2][0] === 'O' && board[2][0] === board[2][1]){
+		updateBoard(2,2)
+		return true
+	}else if(board[2][0] === 'O' && board[2][0] === board[2][2]){
+		updateBoard(2,1)
+		return true
+	}else if(board[2][1] === 'O' && board[2][2] === board[2][1]){
+		updateBoard(2,0)
+		return true
+	}
+	else{ 
+		return false
+	}
+}
+
+export const winColumn = (board, updateBoard) => {
+	// first if statement is making sure that all of the squares don't equal each other by all being empty spaces
+	// first column
+	if(board[0][0] === 'X' && board[0][0] === board[1][0]){
+		updateBoard(2,0)
+		return true
+	}else if (board[0][0] === 'X' && board[0][0] === board[2][0]){
+		updateBoard(1,0)
+		return true
+	}else if (board[1][0] === 'X' && board[1][0] === board[2][0] ){
+		updateBoard(0,0)
+		return true
+	}
+	// second column
+	else if(board[0][1] === 'X' && board[0][1] === board[1][1]){
+		updateBoard(2,1)
+		return true
+	}else if (board[0][1] === 'X' && board[0][1] === board[2][1]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'X' && board[1][1] === board[2][1]){
+		updateBoard(0,1)
+		return true
+	}
+	// third column
+	else if(board[0][2] === 'X' && board[0][2] === board[1][2]){
+		updateBoard(2,2)
+		return true
+	}else if(board[2][2] === 'X' && board[0][2] === board[2][2]){
+		updateBoard(1,2)
+		return true
+	}else if(board[2][2] === 'X' && board[2][2] === board[1][2]){
+		updateBoard(0,2)
+		return true
+	}
+	else{ 
+		return false
+	}
+}
+
+export const blockColumn = (board, updateBoard) => {
+	if(board[0][0] === 'O' && board[0][0] === board[1][0]){
+		updateBoard(2,0)
+		return true
+	}else if (board[0][0] === 'O' && board[0][0] === board[2][0]){
+		updateBoard(1,0)
+		return true
+	}else if (board[1][0] === 'O' && board[1][0] === board[2][0] ){
+		updateBoard(0,0)
+		return true
+	}
+	// second column
+	else if(board[0][1] === 'O' && board[0][1] === board[1][1]){
+		updateBoard(2,1)
+		return true
+	}else if (board[0][1] === 'O' && board[0][1] === board[2][1]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'O' && board[1][1] === board[2][1]){
+		updateBoard(0,1)
+		return true
+	}
+	// third column
+	else if(board[0][2] === 'O' && board[0][2] === board[1][2]){
+		updateBoard()
+		return true
+	}else if(board[2][2] === 'O' && board[0][2] === board[2][2]){
+		updateBoard()
+		return true
+	}else if(board[2][2] === 'O' && board[2][2] === board[1][2]){
+		updateBoard()
+		return true
+	}
+	else{ 
+		return false
+	}
+}
+
+export const winDiagonal = (board, updateBoard) => {
+	//top left to bottom right
+	if(board[0][0] === 'X' && board[0][0] === board[1][1]){
+		updateBoard(2,2)
+		return true
+	}else if (board[0][0] === 'X' && board[0][0] === board[2][2]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'X' && board[1][1] === board[2][1] ){
+		updateBoard(0,0)
+		return true
+	}
+	// top right to bottom left
+	else if(board[0][2] === 'X' && board[0][2] === board[1][1]){
+		updateBoard(2,0)
+		return true
+	}else if (board[0][2] === 'X' && board[0][2] === board[2][0]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'X' && board[1][1] === board[2][0]){
+		updateBoard(0,2)
+		return true
+	}
+	else{
+		return false
+	}
+}
+export const blockDiagonal = (board, updateBoard) => {
+	//top left to bottom right
+	if(board[0][0] === 'O' && board[0][0] === board[1][1]){
+		updateBoard(2,2)
+		return true
+	}else if (board[0][0] === 'O' && board[0][0] === board[2][2]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'O' && board[1][1] === board[2][1] ){
+		updateBoard(0,0)
+		return true
+	}
+	// top right to bottom left
+	else if(board[0][2] === 'O' && board[0][2] === board[1][1]){
+		updateBoard(2,0)
+		return true
+	}else if (board[0][2] === 'O' && board[0][2] === board[2][0]){
+		updateBoard(1,1)
+		return true
+	}else if (board[1][1] === 'O' && board[1][1] === board[2][0]){
+		updateBoard(0,2)
+		return true
+	}
+	else{
+		return false
+	}
 }
