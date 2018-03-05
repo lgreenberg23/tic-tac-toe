@@ -2,7 +2,7 @@ import React from 'react'
 import Square from './square'
 import '../board.css'
 import {win} from '../services/gameLogic'
-//import {} from '../services/aiLogic'
+// import {move} from '../services/aiLogic'
 
 
 class Board extends React.Component{
@@ -12,11 +12,15 @@ class Board extends React.Component{
 		movesMade: 0
 	}
 
+	//user is O, user goes first
+
 	updateBoard = (row, column) => {
 		let move = ''
+		// added 1 to movesMade because otherwise would be the last move, 
+		// meaning same player would go 2x
 		let movesMade = this.state.movesMade + 1
 		if (movesMade % 2 === 0){
-			move='X'
+			move = 'X'
 		}else{
 			move = 'O'
 		}
@@ -28,40 +32,31 @@ class Board extends React.Component{
 	}
 
 	componentDidUpdate = () => {
-		let didWin = win(this.state.board)
-		this.checkBoard(didWin)
+		//check if theres a winner
+		let winner = win(this.state.board)
+		if (!winner && this.state.movesMade < 9){
+				move(this.state.board, this.state.movesMade, this.updateBoard)
+		}else{
+			this.gameOver(winner)
+		}
 	}
 
-	checkBoard = (didWin) => {
-		if (didWin){
-			let winner = this.state.movesMade % 2 !== 0 ? "Player 1 Won!" : "Player 2 Won!"
-			alert(winner)
-			// console.log(winner)
+	gameOver = (winner) => {
+		if (winner){
+			let whoWon = this.state.movesMade % 2 !== 0 ? "Player 1 Won!" : "Player 2 Won!"
+			alert(whoWon)
+			// display popup instead of alerting
 			this.setState(
 				{ board: [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']], 
 				  movesMade: 0 }
 			)
-		}
-		else if	(this.state.movesMade === 9){
-			alert("game over; no winner")
-		}
-	}
-
-	//AI
-	aiFirstMove = () =>{
-		//first pick the middle square, if taken go in top left corner
-		if (this.state.board[1][1] === ' '){
-			this.updateBoard(1,1)
 		}else{
-			this.updateBoard(0,0)
+			alert("game over; no winner")
+			//display popup instead of alerting
 		}
 	}
 
-	aiSubsequentMoves = () => {
-		// if I have 2 in a row, place the third one
-		// if they have 2 in a row/column/diagonal and the last is blank, block them
-		// otherwise, go anywhere open
-	}
+	alertEnding = () =>
 
 	render(){
 		return(
