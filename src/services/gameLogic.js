@@ -1,6 +1,6 @@
 	
 export const win = (board) => {
-		if (this.winRow(board) || this.winColumn(board) || this.winDiagonal(board)){
+		if (winRow(board) || winColumn(board) || winDiagonal(board)){
 			return true
 		}
 		return false

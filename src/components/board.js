@@ -12,8 +12,6 @@ class Board extends React.Component{
 		movesMade: 0
 	}
 
-//2-player
-/*
 	updateBoard = (row, column) => {
 		let move = ''
 		let movesMade = this.state.movesMade + 1
@@ -28,8 +26,6 @@ class Board extends React.Component{
 			this.setState( {movesMade, board} )
 		}
 	}
-	*/
-	//1 player
 
 	componentDidUpdate = () => {
 		let didWin = win(this.state.board)
