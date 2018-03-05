@@ -35,6 +35,7 @@ class Board extends React.Component{
 		//check if theres a winner
 		let winner = win(this.state.board)
 		if (!winner && this.state.movesMade < 9 && this.state.movesMade % 2 !== 0){
+				debugger
 				move(this.state.board, this.state.movesMade, this.updateBoard)
 		}else if (winner){
 			this.gameOver(winner)
@@ -47,7 +48,7 @@ class Board extends React.Component{
 	gameOver = (winner) => {
 		if (winner){
 			let whoWon = this.state.movesMade % 2 !== 0 ? "Player 1 Won!" : "Player 2 Won!"
-			alert(whoWon)
+			setTimeout(alert(whoWon), 1000)
 			// display popup instead of alerting
 			this.setState(
 				{ board: [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']], 
