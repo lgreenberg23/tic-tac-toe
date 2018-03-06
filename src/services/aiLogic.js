@@ -1,12 +1,10 @@
 export const move = (board, movesMade, updateBoard) => {
 	// if I have 2 in a row, win
 	if (!!canIWin(board, updateBoard)){
-		debugger
 		return true
 	}
 	// if they have 2 in a row, block them
 	else if (!!canIBlock(board, updateBoard)){
-		debugger
 		return true
 	}
 	else{
@@ -16,8 +14,7 @@ export const move = (board, movesMade, updateBoard) => {
 			let placeRow = -1
 			let placeCol = -1
 		//find empty space, go there
-			board.forEach((row, index) => {
-				debugger
+			board.forEach((row, index) => {	
 				for (let column=0; column<3; column++){
 				console.log(index, column)
 					if(board[index][column] === ' '){
@@ -59,14 +56,12 @@ export const canIWin = (board, updateBoard) => {
 }
 
 export const canIBlock = (board, updateBoard) => {
-	debugger
 	if (blockRow(board, updateBoard) || blockColumn(board, updateBoard) || blockDiagonal(board, updateBoard)){
 		return true
 	}
 	return false
 }
 
-//if that 
 export const winRow = (board, updateBoard) => {
 	//top row
 	if (board[0][0] === ' ' || board[0][1]===' ' || board[0][2] === ' '){
@@ -125,7 +120,6 @@ export const winRow = (board, updateBoard) => {
 }
 
 export const blockRow = (board, updateBoard) => {
-	// debugger
 	//top row
 	if (board[0][0] === ' ' || board[0][1]===' ' || board[0][2] === ' '){
 		if(board[0][0] === 'O' && board[0][0] === board[0][1]){
@@ -246,6 +240,7 @@ export const winColumn = (board, updateBoard) => {
 }
 
 export const blockColumn = (board, updateBoard) => {
+	// first column
 	if(board[0][0] === ' ' || board[1][0]===' ' || board[2][0] === ' '){
 		if(board[0][0] === 'O' && board[0][0] === board[1][0]){
 			if (board[2][0]=== ' '){
@@ -344,6 +339,7 @@ export const winDiagonal = (board, updateBoard) => {
 	}
 	return false
 }
+
 export const blockDiagonal = (board, updateBoard) => {
 	//top left to bottom right
 	if(board[0][0] === ' ' || board[0][1] ===' ' || board[2][2]===' '){
@@ -382,7 +378,5 @@ export const blockDiagonal = (board, updateBoard) => {
 			}
 		}
 	}
-	else{
-		return false
-	}
+	return false
 }

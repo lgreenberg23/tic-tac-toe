@@ -39,7 +39,7 @@ class Board extends React.Component{
 				move(this.state.board, this.state.movesMade, this.updateBoard)
 		// if there is a winner
 		}else if (winner){
-			this.gameOver(winner)
+			setTimeout(()=> {this.gameOver(winner)}, 40)
 		}
 		// if the board is full
 		else if (this.state.movesMade === 9){
@@ -50,7 +50,7 @@ class Board extends React.Component{
 	gameOver = (winner) => {
 		if (winner){
 			let whoWon = this.state.movesMade % 2 !== 0 ? "Player 1 Won!" : "Player 2 Won!"
-			setTimeout(alert(whoWon), 1000)
+			alert(whoWon)
 			// display popup instead of alerting
 			this.setState(
 				{ board: [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']], 
