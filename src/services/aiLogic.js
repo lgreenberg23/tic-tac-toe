@@ -23,19 +23,12 @@ export const move = (board, movesMade, updateBoard) => {
 						break
 					}
 				}
-				// return true
-				// break
 			})
 			updateBoard(placeRow, placeCol)
 		}
 		return true
 	}
 }
-
-// export const makeMove(row, column, updateBoard){
-// 	updateBoard(row, column)
-// }
-
 
 export const aiFirstMove = (board, updateBoard) =>{
 	//first pick the middle square, if taken go in top left corner
