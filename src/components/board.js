@@ -34,12 +34,14 @@ class Board extends React.Component{
 	componentDidUpdate = () => {
 		//check if theres a winner
 		let winner = win(this.state.board)
+		//if not, and there are moves to be made left, and its comp's turn
 		if (!winner && this.state.movesMade < 9 && this.state.movesMade % 2 !== 0){
-				debugger
 				move(this.state.board, this.state.movesMade, this.updateBoard)
+		// if there is a winner
 		}else if (winner){
 			this.gameOver(winner)
 		}
+		// if the board is full
 		else if (this.state.movesMade === 9){
 			this.gameOver(winner)
 		}
