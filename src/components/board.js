@@ -70,6 +70,9 @@ class Board extends React.Component{
 		return(
 			<div className='board'>
 				<h2>tic-tac-toe</h2>
+				<br>
+				<p>Please click a square to start - you have the first move!</p>
+				<br>
 				{this.state.board.map((row, rowIndex) => {
 						return (<div className='row' key={rowIndex}>
 										{row.map( (square, columnIndex) => <Square updateBoard={this.updateBoard} 
